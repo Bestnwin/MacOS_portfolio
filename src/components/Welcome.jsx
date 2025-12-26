@@ -20,7 +20,6 @@ const renderText = (text, className, baseWeight = 400) => {
     </span>
   ));
 };
-
 const setupTextHover = (Container, type) => {
   if (!Container) return;
 
@@ -44,22 +43,23 @@ const setupTextHover = (Container, type) => {
       const distance = Math.abs(mousex - (l - left + w / 2));
       const intensity = Math.exp(-(distance ** 2) / 2000);
 
-      animateLetters(
-        letter,
-        min + (max - min) * intensity
-      );
+      animateLetters(letter, min + (max - min) * intensity);
     });
   };
-  const handleMouseLeave= ()=>{
-    letters.forEach((letter)=>animateLetters(letter,base,0.3));
-  }
+
+  const handleMouseLeave = () => {
+    letters.forEach((letter) =>
+      animateLetters(letter, base, 0.3)
+    );
+  };
 
   Container.addEventListener("mousemove", handleMouseMove);
-  Container.addEventListener("mouseleave",handleMouseLeave);
-  return ()=>{
-    container.removeEventListener("mousemove",handleMouseMove);
-    container.removeEventListener("mouseleave",handleMouseLeave);
-  }
+  Container.addEventListener("mouseleave", handleMouseLeave);
+
+  return () => {
+    Container.removeEventListener("mousemove", handleMouseMove);
+    Container.removeEventListener("mouseleave", handleMouseLeave);
+  };
 };
 
 
@@ -71,10 +71,10 @@ const Welcome = () => {
         const titleCleanup= setupTextHover(titleRef.current,'title');
         const subtitleCleanup=setupTextHover(subtitleRef.current,'subtitle');
         
-        return ()=>{
-            subtitleCleanup();
-            titleCleanup();
-        }
+        return () => {
+            subtitleCleanup && subtitleCleanup();
+            titleCleanup && titleCleanup();
+        };
     
     },[]);
 
